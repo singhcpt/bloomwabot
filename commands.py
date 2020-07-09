@@ -1,6 +1,7 @@
+import bloomdataservices as bds
 import time
 from user import *
-from event import *
+from post import *
 from strings import *
 from utilities import *
 
@@ -29,6 +30,7 @@ def setup(inputStr, user):
     elif(user.getCmdSubState() == 2):
         user.setCounty(inputStr)
         user.updateCmdState(CommandState.Default)
+        bds.create_user(user)
         return SETUP_MESSAGE4
     return "State out of Range Error (probably stale state)"
     
@@ -50,11 +52,17 @@ def post(inputStr, user):
     elif(user.getCmdSubState() == 2):
         user.cache.setLocation(inputStr)
         user.setCmdSubState(3)
-        #newPost = Post(user.cache[0],user.cache[1],user.cache[3], user.cache[2], time.time())
-        #Add newpost to database here
-        user.updateCmdState(CommandState.Default)
-        # insert post into database
+        
         return REPORT_MESSAGE4
+    elif(user.getCmdSubState() == 3):
+        user.cache.setPrice(int(inputStr))
+        user.setCmdSubState(4)
+        
+        newPost = Post(bds.get_user_id(user.number), user.cache.crop, user.cache.kilograms, user.cache.location, user.cache.price)
+        bds.create_post(newPost)
+
+        user.updateCmdState(CommandState.Default)
+        return REPORT_MESSAGE5
     return "State out of Range Error (probably stale state)"
     
         
@@ -79,8 +87,16 @@ def ls(inputStr, user):
     elif(user.getCmdSubState() == 3):
         user.cache.setPrice(int(inputStr))
         user.setCmdSubState(4)
-        # sending the query and return posts from database
-        return LIST_MESSAGE5
+        
+        posts = bds.get_posts(user.cache.crop, user.cache.price, user.cache.location)
+        
+        post_string = ""
+        post_count = 1
+
+        for post in posts:
+            post_string += "(" + str(post_count) + ") " + str(post) + "\n"
+
+        return LIST_MESSAGE5 + "\n" + post_string
 
 def clear():
     events.clear()

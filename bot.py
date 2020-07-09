@@ -3,6 +3,7 @@ import time
 from user import *
 from utilities import *
 from commands import *
+import bloomdataservices as bds
 #from algorithm import *
 
 def isCommand(inputStr):
@@ -32,15 +33,15 @@ def processByState(inputStr, user):
         return post(inputStr, user)
     if(user.getCmdState() == CommandState.Browsing):
         return ls(inputStr, user)
-    return "Unimplemented"
+    return "Text #BUY or #SELL to buy or sell produce."
 
 def processText(inputStr, number):
-    if(not number in users):
+    if(bds.get_user_id(number) == None):
         return setup(number, None)
     if(isCommand(inputStr)):
-        return processCommand(inputStr[1:], users[number])
+        return processCommand(inputStr[1:], bds.get_user(number))
     #TODO State is not changed by a Command override currently 
-    return processByState(inputStr, users[number])
+    return processByState(inputStr, bds.get_user(number))
 
 def getUserInfo():
     return users

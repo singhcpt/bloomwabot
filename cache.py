@@ -1,6 +1,6 @@
 class Cache:
     
-    def _init_(self):
+    def __init__(self):
         self.crop = ""
         self.kilograms = -1
         self.location = ""

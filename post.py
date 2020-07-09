@@ -25,3 +25,9 @@ class Post:
     def setPrice(self, price):
         self.price = price
         return 
+
+    def __str__(self):
+        return "Crop: " + self.crop + " | Quantity: " + str(self.quantity) + " kgs | Location: " + self.location + " | Price: " + str(self.price) + " sh "
+    
+    __repr__=__str__
+        

@@ -14,8 +14,9 @@ REPORT_MESSAGE2 = "How many kilograms of your crop are you selling?"
 
 REPORT_MESSAGE3 = "Where are you located?"
 
-#* automatic submission not yet supported - TODO
-REPORT_MESSAGE4 = "Thanks! Your crops have been posted. We will inform you when someone has purchased your crops."
+REPORT_MESSAGE4 = "What is the price of your crops?"
+
+REPORT_MESSAGE5 = "Thanks! Your crops have been posted. We will inform you when someone has purchased your crops."
 
 LIST_MESSAGE1 = "What crop are you looking for?"
 
