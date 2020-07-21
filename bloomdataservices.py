@@ -18,7 +18,7 @@ def create_user(user):
     
     cursor = userCnx.cursor()
     
-    create_user = "INSERT INTO Users (name, phone_number, rating, county, profession) \
+    create_user = "INSERT INTO users (name, phone_number, rating, county, profession) \
         VALUES (\'" + user.name + "\'," + str(user.number) + "," + str(user.reliability) + ",\'" + user.county \
             + "\',\'" + user.profession + "\');"
 
@@ -66,7 +66,7 @@ def create_post(post):
     postCnx = create_connection()
     cursor = postCnx.cursor()
     
-    create_post = "INSERT INTO Posts (user_id, quantity, type, location, price) \
+    create_post = "INSERT INTO posts (user_id, quantity, type, location, price) \
     VALUES (" + str(post.user_id) + "," + str(post.quantity) + ",\'" + \
         post.crop + "\',\'" + str(post.location) + "\'," + str(post.price) + ");"
 
@@ -110,7 +110,7 @@ def get_posts(type, max, location):
     getpostCnx = create_connection()
     cursor = getpostCnx.cursor()
     
-    get_posts = "SELECT * FROM Posts WHERE type = " + "\'" + type + "\'"
+    get_posts = "SELECT * FROM posts WHERE type = " + "\'" + type + "\'"
     get_posts += " AND price <= " + str(max)
     get_posts += " AND location = " + "\'" + location + "\';"
     
